@@ -1,11 +1,17 @@
 import json
 import os
-
 from zabanshenas.model import TransformerLangDetection
+
+
+def get_portable_filename(filename):
+    path, _ = os.path.split(__file__)
+    filename = os.path.join(path, filename)
+    return filename
+
 
 # BASE_DIR = os.getcwd()
 MODELS = {
-    "v1": f"../models/v1-415154705/"
+    "v1": get_portable_filename("models/v1-415154705/")
 }
 
 
