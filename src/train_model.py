@@ -55,12 +55,14 @@ def main(data_args, model_args, training_args):
         tokenizer,
         x_label=data_args.x_label,
         y_label=data_args.y_label,
+        max_data=data_args.max_data
     )
     valid_dataset = LangDataset(
         data_args.valid_file,
         tokenizer,
         x_label=data_args.x_label,
         y_label=data_args.y_label,
+        max_data=data_args.max_data
     )
 
     print(
@@ -181,7 +183,7 @@ def main(data_args, model_args, training_args):
         total_loss = []
         total_acc = []
 
-        for data in tqdm(valid_loader, total=len(valid_dataset)):
+        for data in tqdm(valid_loader, total=len(valid_loader)):
             input_ids, targets = data["input_ids"], data["targets"]
             input_masks = make_src_mask(input_ids)
             batch_size = input_ids.shape[0]
@@ -208,12 +210,13 @@ def main(data_args, model_args, training_args):
         return total_loss, total_acc
 
     best_loss = float("inf")
+    steps = 0
     for epoch in range(1, training_args.n_epochs + 1):
         start_time = time.time()
 
         print()
         print("Training ...")
-        train_loss, train_acc, steps = train(epoch)
+        train_loss, train_acc, steps = train(epoch, steps=steps)
 
         print()
         print("Evaluating ...")
@@ -240,7 +243,7 @@ def main(data_args, model_args, training_args):
             best_loss = valid_loss
 
             checkpoint_dir = training_args.checkpoint_dir
-            checkpoint_path = os.path.join(checkpoint_dir, steps)
+            checkpoint_path = os.path.join(checkpoint_dir, f"checkpoint-{steps}")
             os.makedirs(checkpoint_path, exist_ok=True)
 
             checkpoints = glob.glob(os.path.join(checkpoint_dir, "checkpoint-*"))
