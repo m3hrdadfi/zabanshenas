@@ -27,7 +27,7 @@ if __name__ == "__main__":
     setup(
         name="zabanshenas",
         version=__version__,
-        description="zabanshenas - a transformer language detector",
+        description="zabanshenas - language detection",
         long_description=long_description,
         long_description_content_type="text/markdown",
         author="Mehrdad Farahani",
