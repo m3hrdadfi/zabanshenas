@@ -4,9 +4,9 @@ import torch
 from torch.nn import functional as F
 from torch import nn as nn
 
-from attentions import MultiHeadAttention
-from layers import EncoderLayer
-from positionals import (
+from zabanshenas.model.attentions import MultiHeadAttention
+from zabanshenas.model.layers import EncoderLayer
+from zabanshenas.model.positionals import (
     Embedding,
     PositionWiseFeedForward,
     FixedPositionalEncoding as PositionalEncoding
@@ -19,7 +19,7 @@ import numpy as np
 from tqdm import tqdm
 from tokenizers import Tokenizer
 
-from utils.utils import make_src_mask
+from zabanshenas.utils import make_src_mask
 
 
 class Encoder(nn.Module):
