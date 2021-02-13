@@ -36,18 +36,19 @@ class BaseArguments:
 
 @dataclass
 class DataTrainingArguments(BaseArguments):
-    train_file: str = "../data/train.json"
-    valid_file: str = "../data/validation.json"
-    tokenizer_file: str = "../config/tokenizer.json"
+    train_file: str = "./data/train.json"
+    valid_file: str = "./data/valid.json"
+    tokenizer_file: str = "./config/tokenizer.json"
     x_label: str = "text"
     y_label: str = "lang_id"
     pad_token: str = "<pad>"
     enable_padding: bool = True
     max_seq_len: int = 512
-    train_batch_size: int = 8
+    train_batch_size: int = 16
     train_shuffle: bool = True
-    valid_batch_size: int = 8
+    valid_batch_size: int = 16
     valid_shuffle: bool = False
+    max_data: int = 1000
 
 
 @dataclass

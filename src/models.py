@@ -2,6 +2,7 @@ from typing import Optional
 
 import torch
 from torch import nn as nn
+
 from attentions import MultiHeadAttention
 from layers import EncoderLayer
 from positionals import (
@@ -173,8 +174,8 @@ class TransformerLangDetection(nn.Module):
 
         return logits
 
+    @staticmethod
     def load_tokenizer(
-        self,
         tokenizer_file: str,
         enable_padding: bool = True,
         pad_token: str = "<pad>",
@@ -212,13 +213,9 @@ class TransformerLangDetection(nn.Module):
     @staticmethod
     def load(
         model_dir: str,
-        model_args: dict = {},
-        device: Optional[torch.device] = None
+        model_args: dict = {}
     ):
         assert os.path.exists(model_dir), "model_dir does not exists"
-
-        if not device:
-            device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
         try:
             model_args_default = torch.load(os.path.join(model_dir, "model_args.bin"))
@@ -239,30 +236,45 @@ class TransformerLangDetection(nn.Module):
         batch_size: int = 32,
         progressbar: bool = True,
         keep_attention: bool = False,
-        pad_token: str = "<pad>"
+        pad_token: str = "<pad>",
+        topk: int = 5,
+        device: Optional[torch.device] = None
     ):
+        if not device:
+            device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
         n_x = len(x)
         n_batches = int(np.ceil(n_x / batch_size)) if n_x > batch_size else 1
         has_label_map = True if isinstance(label_map, dict) and len(label_map) > 0 else False
 
-        ids_predictions = []
-        names_predictions = []
         attention_list = None
         input_tokens_list = []
 
+        y_preds = []
+        y_names = []
+        y_probs = []
+
+        topk_preds = []
+        topk_probs = []
+
         model = self
+        model = model.to(device)
 
         keep_attention = True if model.keep_attention or keep_attention else False
 
-        for i in tqdm(range(n_batches), disable=not progressbar):
+        for i in tqdm(range(n_batches), disable=not progressbar, position=0):
             batch = x[i * batch_size: (i + 1) * batch_size]
 
             input_ids = torch.tensor([tokenizer.encode(text).ids for text in batch], dtype=torch.long)
             input_masks = make_src_mask(input_ids)
 
-            input_tokens = [[tokenizer.decode([token_id]) for token_id in tokenizer.encode(
-                text).ids if token_id != tokenizer.encode(pad_token).ids[0]] for text in batch]
-            input_tokens_list.extend(input_tokens)
+            input_ids = input_ids.to(device)
+            input_masks = input_masks.to(device)
+
+            if keep_attention:
+                input_tokens = [[tokenizer.decode([token_id]) for token_id in tokenizer.encode(
+                    text).ids if token_id != tokenizer.encode(pad_token).ids[0]] for text in batch]
+                input_tokens_list.extend(input_tokens)
 
             model.eval()
             with torch.no_grad():
@@ -273,22 +285,34 @@ class TransformerLangDetection(nn.Module):
                 else:
                     outputs = model(input_ids, input_masks)
 
-                _, predictions = torch.max(outputs, 1)
-                predictions = predictions.detach().cpu().numpy()
+                probs, preds = torch.topk(outputs, k=topk)
 
-                ids_predictions.extend(predictions)
+                probs = probs.detach().cpu().numpy()
+                preds = preds.detach().cpu().numpy()
+
+                y_probs.extend(probs[:, 0].tolist())
+                y_preds.extend(preds[:, 0].tolist())
+
+                topk_probs.extend(probs.tolist())
+                topk_preds.extend(preds.tolist())
 
                 if has_label_map:
-                    names_predictions.extend([label_map.get(prediction, None) for prediction in predictions])
+                    y_names.extend([label_map.get(pred, None) for pred in preds[:, 0].tolist()])
+
+        y_probs = np.array(y_probs)
+        y_preds = np.array(y_preds)
+
+        topk_probs = np.array(topk_probs)
+        topk_preds = np.array(topk_preds)
 
         if keep_attention:
 
             if has_label_map:
-                return ids_predictions, names_predictions, attention_list, input_tokens_list
+                return [y_probs, y_preds, y_names], [topk_probs, topk_preds], attention_list, input_tokens_list
             else:
-                return ids_predictions, attention_list, input_tokens_list
+                return [y_probs, y_preds], [topk_probs, topk_preds], attention_list, input_tokens_list
 
         if has_label_map:
-            return ids_predictions, names_predictions
+            return [y_probs, y_preds, y_names], [topk_probs, topk_preds]
 
-        return ids_predictions
+        return [y_probs, y_preds], [topk_probs, topk_preds]
