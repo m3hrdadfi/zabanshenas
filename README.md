@@ -32,7 +32,7 @@ It is a benchmark dataset for monolingual written natural language identificatio
 - German, Bavarian, Low German, Palatine German, Ripuarisch, Alemannic German, Pennsylvania German
 - Belarusian, Belarusian (Taraschkewiza)
 - Kurdish, Central Kurdish
-I- ndonesian, Minangkabau, Banyumasan, Banjar, Sundanese, Javanese
+- Indonesian, Minangkabau, Banyumasan, Banjar, Sundanese, Javanese
 - Languages are spoken in India:
     - Maithili, Bhojpuri
     - Bengali, Bishnupriya
@@ -396,16 +396,29 @@ pip install -e .
 
 # Getting Started
 
-You can use this code snippet to identify the most likely language of a written document.
+You can use this code snippet to identify the most likely language of a written document. You just have to say: ZABANSHENAS (language detector) -> BESHNAS (detect) 😎. 
+
+*Sounds interesting, doesn't it?*
 
 ```python
 from zabanshenas import beshnas
 
-text = "نیروی دریایی امپراتوری آلمان (به آلمانی: Kaiserliche Marine) در زمان شکلگیری امپراتوری آلمان تشکیل "
+text = "خورشت فسنجان یا خورشت فسنجون یکی از خورش‌های اصیل ایرانی است که از غذاهای سنتی و باستانی گیلان محسوب می‌شود که در همه جای ایران باب شده است."
 beshnas(text)
 
->>> 
-{'prob': 0.9285080432891846, 'idx': 56, 'code': 'fas', 'name': 'Persian'}
+>>> {'code': 'fas', 'idx': 56, 'name': 'Persian', 'prob': 0.9846975803375244}
+
+text = "Pakistan isch no dr Verfassuig vo 1973 e föderale Staat. Är untergliederet sich in di vier Provinze Belutschistan, Khyber Pakhtunkhwa (früener Nordweschtlichi Gränzprovinz), Punjab un Sindh, wo ne uf "
+
+beshnas(text)
+
+>>> {'code': 'als', 'idx': 2, 'name': 'Alemannic German', 'prob': 0.7985869646072388}
+
+text = "Dario Fo hett 1954 de Schauspelerin un latere politische Aktivistin Franca Rame (1929–2013) heiraadt, mit de he ok künstlerisch eng tosommenarbeit hett."
+
+beshnas(text)
+
+>>> {'code': 'nds', 'idx': 146, 'name': 'Low German', 'prob': 0.6278020739555359}
 ```
 
 Or you can find out the k-possible candidates of detected languages using the following snippet.
@@ -413,22 +426,22 @@ Or you can find out the k-possible candidates of detected languages using the fo
 ```python
 from zabanshenas import beshnas
 
-text = "نیروی دریایی امپراتوری آلمان (به آلمانی: Kaiserliche Marine) در زمان شکلگیری امپراتوری آلمان تشکیل "
+text = "خورشت فسنجان یا خورشت فسنجون یکی از خورش‌های اصیل ایرانی است که از غذاهای سنتی و باستانی گیلان محسوب می‌شود که در همه جای ایران باب شده است."
 beshnas(text, show_topk=True)
 
 >>> 
-{0: {'code': 'fas', 'idx': 56, 'name': 'Persian', 'prob': 0.9285080432891846},
+{0: {'code': 'fas', 'idx': 56, 'name': 'Persian', 'prob': 0.9846975803375244},
  1: {'code': 'mzn',
      'idx': 141,
      'name': 'Mazanderani',
-     'prob': 0.03730203956365585},
- 2: {'code': 'glk', 'idx': 66, 'name': 'Gilaki', 'prob': 0.014393134973943233},
- 3: {'code': 'pnb',
-     'idx': 167,
-     'name': 'Western Panjabi',
-     'prob': 0.005894778296351433},
- 4: {'code': 'azb',
-     'idx': 12,
-     'name': 'South Azerbaijani',
-     'prob': 0.0011412198655307293}}
+     'prob': 0.011471129022538662},
+ 2: {'code': 'lrc',
+     'idx': 119,
+     'name': 'Northern Luri',
+     'prob': 0.0017076199874281883},
+ 3: {'code': 'glk', 'idx': 66, 'name': 'Gilaki', 'prob': 0.001486123655922711},
+ 4: {'code': 'ckb',
+     'idx': 36,
+     'name': 'Central Kurdish',
+     'prob': 0.00019319159036967903}}
 ```
