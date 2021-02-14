@@ -16,15 +16,19 @@ zabanshenas (زبان‌شناس / zæbænʒenæs) which has two meanings
 - [How to Install](#how-to-install)
   - [Install with pip](#install-with-pip)
   - [Install from sources](#install-from-sources)
-- [Getting Started](#getting-started)
+- [How to Use](#how-to-use)
+- [For Future](#for-future)
 
 # Introduction 
-This repository is a preliminary step in creating a language detection script that inherits benefits from [Transformer](https://arxiv.org/abs/1706.03762) architecture. Nowadays, Transformers have played a massive role in Natural Language Processing fields. Simply, Transformers uses an attention mechanism to boost the speed and extract a high level of information (abstraction).
+
+This repository is preliminary steps in creating a language detection script that uses [Transformer](https://arxiv.org/abs/1706.03762) architecture. Nowadays, Transformers have played a massive role in Natural Language Processing fields. Simply, Transformers uses an attention mechanism to boost the speed and extract a high level of information (abstraction).
 
 There are plenty of ways, solutions, and packages to find the language of a written piece of text or document. All of them have their pros and cons. Some able to detect faster and support as many languages as possible. However, in this case, I plan to implement a scenario capable of understanding similar groups of languages and covering more than 200 languages (235 exactly) thanks to [WiLI-2018](https://arxiv.org/abs/1801.07779) and the Transformer architecture.
 
+*This proposed method can properly detect a written language in a document between 128 to 512 tokens (subwords). For less than 128 tokens, the model might sometimes see incorrect language. Some of those inconsistencies will be postponed to the future.*
 
 # WilI-2018 (Cleaned version)
+
 It is a benchmark dataset for monolingual written natural language identification (high covering of a specific language). It contains 229,095 paragraphs that cover 235 languages. Language distribution includes 122 Indo-European languages, 22 Austronesian languages, 17 Turkic languages, 14 Uralic languages, 11 Niger-Congo languages, 10 Sino-Tibetan languages, 9 Afro-Asiatic languages, 6 constructed languages, and 24 languages of smaller families. It also consists of groups of similar languages and dialects:
 - Arabic, Egyptian Arabic
 - English, Old English, Scots
@@ -108,263 +112,265 @@ Transformers are a kind of neural sequence transduction model that has a couple 
 
 # Training Configuration
 In the training step, the model setup for the following configurations:
-- d_model: 512
-- heads: 8
-- d_ff: 1024
-- n_position: 5000
-- n_layers: 3
-- pooling_strategy: mean
-- n_classes: 235
-- ff_activation: ReLU
-- ff_bias1: True
-- ff_bias2: True
-- wte_normalization: True
-- max_seq_len: 512
-- enable_padding: True
-- learning_rate: 1e-4
-- n_epochs: 5
+- d_model: `512`
+- heads: `8`
+- d_ff: `1024`
+- n_position: `5000`
+- n_layers: `3`
+- pooling_strategy: `mean`
+- n_classes: `235`
+- ff_activation: `ReLU`
+- ff_bias1: `True`
+- ff_bias2: `True`
+- wte_normalization: `True`
+- max_seq_len: `512`
+- enable_padding: `True`
+- learning_rate: `1e-4`
+- n_epochs: `5`
 
 # Evaluation
+
 The model evaluated over 22,910 samples and tested over 45,819 that both samplings covered 235 languages and precision, recall, F1-scores for each language presented in the following table.
 
+
 |                language                | precision | recall | f1-score |
-|:--------------------------------------:|:---------:|:------:|:--------:|
-|             Achinese (ace)             |    0.99   |  0.91  |   0.95   |
-|             Afrikaans (afr)            |    0.91   |  0.96  |   0.93   |
-|         Alemannic German (als)         |    0.89   |  0.74  |   0.81   |
-|              Amharic (amh)             |    1.00   |  0.97  |   0.98   |
-|           Old English  (ang)           |    0.88   |  0.85  |   0.86   |
-|              Arabic (ara)              |    0.91   |  0.93  |   0.92   |
-|             Aragonese (arg)            |    0.83   |  0.90  |   0.86   |
-|          Egyptian Arabic (arz)         |    0.93   |  0.91  |   0.92   |
-|             Assamese (asm)             |    0.99   |  0.98  |   0.98   |
-|             Asturian (ast)             |    0.92   |  0.67  |   0.78   |
-|               Avar (ava)               |    0.65   |  0.73  |   0.69   |
-|              Aymara (aym)              |    0.94   |  0.88  |   0.91   |
-|         South Azerbaijani (azb)        |    0.99   |  0.95  |   0.97   |
-|            Azerbaijani (aze)           |    1.00   |  0.94  |   0.97   |
-|              Bashkir (bak)             |    0.99   |  0.91  |   0.95   |
-|             Bavarian (bar)             |    0.81   |  0.80  |   0.80   |
-|           Central Bikol (bcl)          |    0.98   |  0.92  |   0.95   |
-| Belarusian (Taraschkewiza) (be-tarask) |    0.67   |  0.75  |   0.71   |
-|            Belarusian (bel)            |    0.71   |  0.56  |   0.63   |
-|              Bengali (ben)             |    0.88   |  0.90  |   0.89   |
-|             Bhojpuri (bho)             |    0.78   |  0.87  |   0.82   |
-|              Banjar (bjn)              |    0.93   |  0.66  |   0.77   |
-|              Tibetan (bod)             |    1.00   |  0.99  |   0.99   |
-|              Bosnian (bos)             |    0.36   |  0.76  |   0.49   |
-|            Bishnupriya (bpy)           |    0.97   |  0.97  |   0.97   |
-|              Breton (bre)              |    0.97   |  0.95  |   0.96   |
-|             Bulgarian (bul)            |    0.91   |  0.92  |   0.91   |
-|              Buryat (bxr)              |    0.92   |  0.79  |   0.85   |
-|              Catalan (cat)             |    0.76   |  0.92  |   0.84   |
-|             Chavacano (cbk)            |    0.69   |  0.40  |   0.51   |
-|             Min Dong (cdo)             |    0.89   |  0.97  |   0.93   |
-|              Cebuano (ceb)             |    0.95   |  1.00  |   0.97   |
-|               Czech (ces)              |    0.96   |  0.92  |   0.94   |
-|              Chechen (che)             |    0.77   |  0.80  |   0.78   |
-|             Cherokee (chr)             |    1.00   |  0.95  |   0.98   |
-|              Chuvash (chv)             |    0.98   |  0.91  |   0.95   |
-|          Central Kurdish (ckb)         |    0.98   |  0.98  |   0.98   |
-|              Cornish (cor)             |    0.96   |  0.95  |   0.95   |
-|             Corsican (cos)             |    0.90   |  0.94  |   0.92   |
-|           Crimean Tatar (crh)          |    0.86   |  0.93  |   0.89   |
-|             Kashubian (csb)            |    0.93   |  0.97  |   0.95   |
-|               Welsh (cym)              |    0.96   |  0.95  |   0.96   |
-|              Danish (dan)              |    0.93   |  0.83  |   0.87   |
-|              German (deu)              |    0.56   |  0.91  |   0.69   |
-|               Dimli (diq)              |    0.98   |  0.89  |   0.93   |
-|              Dhivehi (div)             |    1.00   |  0.99  |   0.99   |
-|           Lower Sorbian (dsb)          |    0.86   |  0.86  |   0.86   |
-|              Doteli (dty)              |    0.55   |  0.67  |   0.60   |
-|              Emilian (egl)             |    0.82   |  0.89  |   0.85   |
-|           Modern Greek (ell)           |    0.93   |  0.98  |   0.96   |
-|              English (eng)             |    0.26   |  0.94  |   0.40   |
-|             Esperanto (epo)            |    0.75   |  0.94  |   0.83   |
-|             Estonian (est)             |    0.65   |  0.86  |   0.74   |
-|              Basque (eus)              |    0.91   |  0.96  |   0.93   |
-|           Extremaduran (ext)           |    0.92   |  0.72  |   0.80   |
-|              Faroese (fao)             |    0.92   |  0.95  |   0.94   |
-|              Persian (fas)             |    0.81   |  0.92  |   0.86   |
-|              Finnish (fin)             |    0.84   |  0.88  |   0.86   |
-|              French (fra)              |    0.52   |  0.89  |   0.65   |
-|              Arpitan (frp)             |    0.77   |  0.78  |   0.77   |
-|          Western Frisian (fry)         |    0.83   |  0.95  |   0.89   |
-|             Friulian (fur)             |    0.93   |  0.76  |   0.83   |
-|              Gagauz (gag)              |    0.91   |  0.79  |   0.85   |
-|          Scottish Gaelic (gla)         |    0.86   |  0.96  |   0.91   |
-|               Irish (gle)              |    0.91   |  0.94  |   0.92   |
-|             Galician (glg)             |    0.85   |  0.79  |   0.82   |
-|              Gilaki (glk)              |    0.86   |  0.87  |   0.86   |
-|               Manx (glv)               |    0.98   |  0.93  |   0.96   |
-|              Guarani (grn)             |    0.99   |  0.95  |   0.97   |
-|             Gujarati (guj)             |    1.00   |  0.93  |   0.97   |
-|           Hakka Chinese (hak)          |    0.99   |  0.95  |   0.97   |
-|          Haitian Creole (hat)          |    0.60   |  0.89  |   0.72   |
-|               Hausa (hau)              |    0.95   |  0.93  |   0.94   |
-|          Serbo-Croatian (hbs)          |    0.41   |  0.22  |   0.29   |
-|              Hebrew (heb)              |    0.98   |  0.99  |   0.98   |
-|            Fiji Hindi (hif)            |    0.88   |  0.89  |   0.89   |
-|               Hindi (hin)              |    0.88   |  0.83  |   0.85   |
-|             Croatian (hrv)             |    0.41   |  0.13  |   0.20   |
-|           Upper Sorbian (hsb)          |    0.81   |  0.89  |   0.85   |
-|             Hungarian (hun)            |    0.86   |  0.99  |   0.92   |
-|             Armenian (hye)             |    0.99   |  0.95  |   0.97   |
-|               Igbo (ibo)               |    0.94   |  0.80  |   0.86   |
-|                Ido (ido)               |    0.92   |  0.91  |   0.91   |
-|            Interlingue (ile)           |    0.98   |  0.85  |   0.91   |
-|               Iloko (ilo)              |    0.90   |  0.90  |   0.90   |
-|            Interlingua (ina)           |    0.93   |  0.95  |   0.94   |
-|            Indonesian (ind)            |    0.33   |  0.01  |   0.01   |
-|             Icelandic (isl)            |    0.97   |  0.95  |   0.96   |
-|              Italian (ita)             |    0.80   |  0.86  |   0.83   |
-|          Jamaican Patois (jam)         |    0.83   |  0.97  |   0.89   |
-|             Javanese (jav)             |    0.85   |  0.85  |   0.85   |
-|              Lojban (jbo)              |    1.00   |  0.96  |   0.98   |
-|             Japanese (jpn)             |    0.99   |  0.97  |   0.98   |
-|            Karakalpak (kaa)            |    0.99   |  0.90  |   0.94   |
-|              Kabyle (kab)              |    0.93   |  0.88  |   0.90   |
-|              Kannada (kan)             |    0.90   |  0.96  |   0.93   |
-|             Georgian (kat)             |    0.97   |  0.94  |   0.95   |
-|              Kazakh (kaz)              |    0.96   |  0.96  |   0.96   |
-|             Kabardian (kbd)            |    0.98   |  0.98  |   0.98   |
-|           Central Khmer (khm)          |    0.95   |  0.89  |   0.92   |
-|            Kinyarwanda (kin)           |    0.93   |  0.86  |   0.89   |
-|              Kirghiz (kir)             |    0.90   |  0.89  |   0.90   |
-|           Komi-Permyak (koi)           |    0.85   |  0.87  |   0.86   |
-|              Konkani (kok)             |    0.80   |  0.77  |   0.79   |
-|               Komi (kom)               |    0.91   |  0.79  |   0.85   |
-|              Korean (kor)              |    0.99   |  0.98  |   0.99   |
-|          Karachay-Balkar (krc)         |    0.91   |  0.91  |   0.91   |
-|            Ripuarisch (ksh)            |    0.67   |  0.88  |   0.76   |
-|              Kurdish (kur)             |    0.90   |  0.98  |   0.94   |
-|              Ladino (lad)              |    0.86   |  0.89  |   0.87   |
-|                Lao (lao)               |    0.98   |  0.88  |   0.93   |
-|               Latin (lat)              |    0.90   |  0.86  |   0.88   |
-|              Latvian (lav)             |    0.94   |  0.88  |   0.91   |
-|             Lezghian (lez)             |    0.96   |  0.87  |   0.91   |
-|             Ligurian (lij)             |    0.92   |  0.89  |   0.90   |
-|             Limburgan (lim)            |    0.76   |  0.88  |   0.81   |
-|              Lingala (lin)             |    0.89   |  0.91  |   0.90   |
-|            Lithuanian (lit)            |    0.95   |  0.94  |   0.94   |
-|              Lombard (lmo)             |    0.92   |  0.77  |   0.84   |
-|           Northern Luri (lrc)          |    0.94   |  0.75  |   0.84   |
-|             Latgalian (ltg)            |    0.88   |  0.93  |   0.90   |
-|           Luxembourgish (ltz)          |    0.84   |  0.81  |   0.82   |
-|              Luganda (lug)             |    0.92   |  0.90  |   0.91   |
-|         Literary Chinese (lzh)         |    0.91   |  0.94  |   0.93   |
-|             Maithili (mai)             |    0.84   |  0.92  |   0.88   |
-|             Malayalam (mal)            |    1.00   |  0.97  |   0.98   |
-|          Banyumasan (map-bms)          |    0.83   |  0.77  |   0.80   |
-|              Marathi (mar)             |    0.95   |  0.81  |   0.87   |
-|              Moksha (mdf)              |    0.85   |  0.95  |   0.90   |
-|           Eastern Mari (mhr)           |    0.90   |  0.85  |   0.88   |
-|            Minangkabau (min)           |    0.98   |  0.95  |   0.97   |
-|            Macedonian (mkd)            |    0.95   |  0.91  |   0.93   |
-|             Malagasy (mlg)             |    0.99   |  0.97  |   0.98   |
-|              Maltese (mlt)             |    0.91   |  0.98  |   0.94   |
-|             Mongolian (mon)            |    0.89   |  0.96  |   0.92   |
-|               Maori (mri)              |    0.99   |  0.97  |   0.98   |
-|           Western Mari (mrj)           |    0.99   |  0.97  |   0.98   |
-|               Malay (msa)              |    0.39   |  0.96  |   0.56   |
-|             Mirandese (mwl)            |    0.97   |  0.93  |   0.95   |
-|              Burmese (mya)             |    1.00   |  1.00  |   1.00   |
-|               Erzya (myv)              |    0.66   |  0.73  |   0.69   |
-|            Mazanderani (mzn)           |    0.86   |  0.91  |   0.89   |
-|          Min Nan Chinese (nan)         |    0.97   |  0.95  |   0.96   |
-|            Neapolitan (nap)            |    0.97   |  0.70  |   0.81   |
-|              Navajo (nav)              |    0.99   |  0.99  |   0.99   |
-|         Classical Nahuatl (nci)        |    0.98   |  0.54  |   0.70   |
-|            Low German (nds)            |    0.87   |  0.91  |   0.89   |
-|        West Low German (nds-nl)        |    0.68   |  0.80  |   0.73   |
-|      Nepali (macrolanguage) (nep)      |    0.68   |  0.51  |   0.58   |
-|              Newari (new)              |    0.93   |  0.79  |   0.86   |
-|               Dutch (nld)              |    0.86   |  0.80  |   0.83   |
-|         Norwegian Nynorsk (nno)        |    0.84   |  0.83  |   0.83   |
-|              Bokmål (nob)              |    0.71   |  0.83  |   0.76   |
-|               Narom (nrm)              |    0.95   |  0.70  |   0.80   |
-|          Northern Sotho (nso)          |    0.79   |  0.96  |   0.87   |
-|              Occitan (oci)             |    0.82   |  0.57  |   0.67   |
-|          Livvi-Karelian (olo)          |    0.85   |  0.91  |   0.88   |
-|               Oriya (ori)              |    0.99   |  0.95  |   0.97   |
-|               Oromo (orm)              |    0.96   |  0.86  |   0.90   |
-|             Ossetian (oss)             |    0.99   |  0.94  |   0.97   |
-|            Pangasinan (pag)            |    0.98   |  0.82  |   0.89   |
-|             Pampanga (pam)             |    0.96   |  0.63  |   0.76   |
-|              Panjabi (pan)             |    1.00   |  0.99  |   0.99   |
-|            Papiamento (pap)            |    0.91   |  0.94  |   0.92   |
-|              Picard (pcd)              |    0.72   |  0.58  |   0.64   |
-|        Pennsylvania German (pdc)       |    0.74   |  0.69  |   0.72   |
-|          Palatine German (pfl)         |    0.80   |  0.67  |   0.73   |
-|          Western Panjabi (pnb)         |    0.94   |  0.97  |   0.96   |
-|              Polish (pol)              |    0.92   |  0.92  |   0.92   |
-|            Portuguese (por)            |    0.75   |  0.84  |   0.79   |
-|              Pushto (pus)              |    0.99   |  0.94  |   0.96   |
-|              Quechua (que)             |    0.74   |  0.93  |   0.82   |
-|      Tarantino dialect (roa-tara)      |    0.92   |  0.90  |   0.91   |
-|              Romansh (roh)             |    0.90   |  0.93  |   0.91   |
-|             Romanian (ron)             |    0.97   |  0.89  |   0.93   |
-|               Rusyn (rue)              |    0.95   |  0.84  |   0.90   |
-|             Aromanian (rup)            |    0.95   |  0.82  |   0.88   |
-|              Russian (rus)             |    0.64   |  0.81  |   0.72   |
-|               Yakut (sah)              |    0.97   |  0.93  |   0.95   |
-|             Sanskrit (san)             |    0.98   |  0.90  |   0.94   |
-|             Sicilian (scn)             |    0.85   |  0.87  |   0.86   |
-|               Scots (sco)              |    0.95   |  0.88  |   0.91   |
-|            Samogitian (sgs)            |    0.98   |  0.96  |   0.97   |
-|              Sinhala (sin)             |    0.99   |  0.91  |   0.95   |
-|              Slovak (slk)              |    0.95   |  0.89  |   0.92   |
-|              Slovene (slv)             |    0.95   |  0.87  |   0.91   |
-|           Northern Sami (sme)          |    0.88   |  0.90  |   0.89   |
-|               Shona (sna)              |    0.88   |  0.82  |   0.85   |
-|              Sindhi (snd)              |    0.98   |  0.98  |   0.98   |
-|              Somali (som)              |    0.90   |  0.84  |   0.87   |
-|              Spanish (spa)             |    0.46   |  0.84  |   0.59   |
-|             Albanian (sqi)             |    0.95   |  0.93  |   0.94   |
-|             Sardinian (srd)            |    0.94   |  0.92  |   0.93   |
-|              Sranan (srn)              |    0.98   |  0.88  |   0.93   |
-|              Serbian (srp)             |    0.91   |  0.87  |   0.88   |
-|          Saterfriesisch (stq)          |    0.96   |  0.91  |   0.93   |
-|             Sundanese (sun)            |    0.93   |  0.86  |   0.89   |
-|      Swahili (macrolanguage) (swa)     |    0.93   |  0.85  |   0.88   |
-|              Swedish (swe)             |    0.94   |  0.92  |   0.93   |
-|             Silesian (szl)             |    0.92   |  0.97  |   0.95   |
-|               Tamil (tam)              |    0.99   |  0.98  |   0.98   |
-|               Tatar (tat)              |    0.95   |  0.91  |   0.93   |
-|               Tulu (tcy)               |    0.95   |  0.91  |   0.93   |
-|              Telugu (tel)              |    0.99   |  0.94  |   0.97   |
-|               Tetum (tet)              |    1.00   |  0.81  |   0.90   |
-|               Tajik (tgk)              |    0.96   |  0.94  |   0.95   |
-|              Tagalog (tgl)             |    0.93   |  0.93  |   0.93   |
-|               Thai (tha)               |    0.90   |  0.97  |   0.93   |
-|              Tongan (ton)              |    0.99   |  0.99  |   0.99   |
-|              Tswana (tsn)              |    0.99   |  0.69  |   0.82   |
-|              Turkmen (tuk)             |    0.98   |  0.94  |   0.96   |
-|              Turkish (tur)             |    0.84   |  0.86  |   0.85   |
-|               Tuvan (tyv)              |    0.89   |  0.90  |   0.90   |
-|              Udmurt (udm)              |    0.98   |  0.94  |   0.96   |
-|              Uighur (uig)              |    0.98   |  0.96  |   0.97   |
-|             Ukrainian (ukr)            |    0.81   |  0.94  |   0.87   |
-|               Urdu (urd)               |    0.98   |  0.97  |   0.98   |
-|               Uzbek (uzb)              |    0.97   |  0.92  |   0.94   |
-|             Venetian (vec)             |    0.88   |  0.86  |   0.87   |
-|               Veps (vep)               |    0.94   |  0.90  |   0.92   |
-|            Vietnamese (vie)            |    0.97   |  0.94  |   0.95   |
-|              Vlaams (vls)              |    0.92   |  0.65  |   0.76   |
-|              Volapük (vol)             |    0.98   |  0.99  |   0.98   |
-|               Võro (vro)               |    0.98   |  0.76  |   0.85   |
-|               Waray (war)              |    1.00   |  0.98  |   0.99   |
-|              Walloon (wln)             |    0.96   |  0.91  |   0.93   |
-|               Wolof (wol)              |    0.94   |  0.90  |   0.92   |
-|            Wu Chinese (wuu)            |    0.95   |  0.85  |   0.90   |
-|               Xhosa (xho)              |    0.91   |  0.85  |   0.88   |
-|            Mingrelian (xmf)            |    0.95   |  0.96  |   0.95   |
-|              Yiddish (yid)             |    0.99   |  0.96  |   0.98   |
-|              Yoruba (yor)              |    0.87   |  0.84  |   0.85   |
-|              Zeeuws (zea)              |    0.78   |  0.75  |   0.76   |
-|           Cantonese (zh-yue)           |    0.87   |  0.90  |   0.89   |
-|         Standard Chinese (zho)         |    0.92   |  0.92  |   0.92   |
-|                  MEAN                  |    0.89   |  0.87  |   0.87   |
+| :------------------------------------: | :-------: | :----: | :------: |
+|             Achinese (ace)             |   0.99    |  0.91  |   0.95   |
+|            Afrikaans (afr)             |   0.91    |  0.96  |   0.93   |
+|         Alemannic German (als)         |   0.89    |  0.74  |   0.81   |
+|             Amharic (amh)              |   1.00    |  0.97  |   0.98   |
+|           Old English  (ang)           |   0.88    |  0.85  |   0.86   |
+|              Arabic (ara)              |   0.91    |  0.93  |   0.92   |
+|            Aragonese (arg)             |   0.83    |  0.90  |   0.86   |
+|         Egyptian Arabic (arz)          |   0.93    |  0.91  |   0.92   |
+|             Assamese (asm)             |   0.99    |  0.98  |   0.98   |
+|             Asturian (ast)             |   0.92    |  0.67  |   0.78   |
+|               Avar (ava)               |   0.65    |  0.73  |   0.69   |
+|              Aymara (aym)              |   0.94    |  0.88  |   0.91   |
+|        South Azerbaijani (azb)         |   0.99    |  0.95  |   0.97   |
+|           Azerbaijani (aze)            |   1.00    |  0.94  |   0.97   |
+|             Bashkir (bak)              |   0.99    |  0.91  |   0.95   |
+|             Bavarian (bar)             |   0.81    |  0.80  |   0.80   |
+|          Central Bikol (bcl)           |   0.98    |  0.92  |   0.95   |
+| Belarusian (Taraschkewiza) (be-tarask) |   0.67    |  0.75  |   0.71   |
+|            Belarusian (bel)            |   0.71    |  0.56  |   0.63   |
+|             Bengali (ben)              |   0.88    |  0.90  |   0.89   |
+|             Bhojpuri (bho)             |   0.78    |  0.87  |   0.82   |
+|              Banjar (bjn)              |   0.93    |  0.66  |   0.77   |
+|             Tibetan (bod)              |   1.00    |  0.99  |   0.99   |
+|             Bosnian (bos)              |   0.36    |  0.76  |   0.49   |
+|           Bishnupriya (bpy)            |   0.97    |  0.97  |   0.97   |
+|              Breton (bre)              |   0.97    |  0.95  |   0.96   |
+|            Bulgarian (bul)             |   0.91    |  0.92  |   0.91   |
+|              Buryat (bxr)              |   0.92    |  0.79  |   0.85   |
+|             Catalan (cat)              |   0.76    |  0.92  |   0.84   |
+|            Chavacano (cbk)             |   0.69    |  0.40  |   0.51   |
+|             Min Dong (cdo)             |   0.89    |  0.97  |   0.93   |
+|             Cebuano (ceb)              |   0.95    |  1.00  |   0.97   |
+|              Czech (ces)               |   0.96    |  0.92  |   0.94   |
+|             Chechen (che)              |   0.77    |  0.80  |   0.78   |
+|             Cherokee (chr)             |   1.00    |  0.95  |   0.98   |
+|             Chuvash (chv)              |   0.98    |  0.91  |   0.95   |
+|         Central Kurdish (ckb)          |   0.98    |  0.98  |   0.98   |
+|             Cornish (cor)              |   0.96    |  0.95  |   0.95   |
+|             Corsican (cos)             |   0.90    |  0.94  |   0.92   |
+|          Crimean Tatar (crh)           |   0.86    |  0.93  |   0.89   |
+|            Kashubian (csb)             |   0.93    |  0.97  |   0.95   |
+|              Welsh (cym)               |   0.96    |  0.95  |   0.96   |
+|              Danish (dan)              |   0.93    |  0.83  |   0.87   |
+|              German (deu)              |   0.56    |  0.91  |   0.69   |
+|              Dimli (diq)               |   0.98    |  0.89  |   0.93   |
+|             Dhivehi (div)              |   1.00    |  0.99  |   0.99   |
+|          Lower Sorbian (dsb)           |   0.86    |  0.86  |   0.86   |
+|              Doteli (dty)              |   0.55    |  0.67  |   0.60   |
+|             Emilian (egl)              |   0.82    |  0.89  |   0.85   |
+|           Modern Greek (ell)           |   0.93    |  0.98  |   0.96   |
+|             English (eng)              |   0.26    |  0.94  |   0.40   |
+|            Esperanto (epo)             |   0.75    |  0.94  |   0.83   |
+|             Estonian (est)             |   0.65    |  0.86  |   0.74   |
+|              Basque (eus)              |   0.91    |  0.96  |   0.93   |
+|           Extremaduran (ext)           |   0.92    |  0.72  |   0.80   |
+|             Faroese (fao)              |   0.92    |  0.95  |   0.94   |
+|             Persian (fas)              |   0.81    |  0.92  |   0.86   |
+|             Finnish (fin)              |   0.84    |  0.88  |   0.86   |
+|              French (fra)              |   0.52    |  0.89  |   0.65   |
+|             Arpitan (frp)              |   0.77    |  0.78  |   0.77   |
+|         Western Frisian (fry)          |   0.83    |  0.95  |   0.89   |
+|             Friulian (fur)             |   0.93    |  0.76  |   0.83   |
+|              Gagauz (gag)              |   0.91    |  0.79  |   0.85   |
+|         Scottish Gaelic (gla)          |   0.86    |  0.96  |   0.91   |
+|              Irish (gle)               |   0.91    |  0.94  |   0.92   |
+|             Galician (glg)             |   0.85    |  0.79  |   0.82   |
+|              Gilaki (glk)              |   0.86    |  0.87  |   0.86   |
+|               Manx (glv)               |   0.98    |  0.93  |   0.96   |
+|             Guarani (grn)              |   0.99    |  0.95  |   0.97   |
+|             Gujarati (guj)             |   1.00    |  0.93  |   0.97   |
+|          Hakka Chinese (hak)           |   0.99    |  0.95  |   0.97   |
+|          Haitian Creole (hat)          |   0.60    |  0.89  |   0.72   |
+|              Hausa (hau)               |   0.95    |  0.93  |   0.94   |
+|          Serbo-Croatian (hbs)          |   0.41    |  0.22  |   0.29   |
+|              Hebrew (heb)              |   0.98    |  0.99  |   0.98   |
+|            Fiji Hindi (hif)            |   0.88    |  0.89  |   0.89   |
+|              Hindi (hin)               |   0.88    |  0.83  |   0.85   |
+|             Croatian (hrv)             |   0.41    |  0.13  |   0.20   |
+|          Upper Sorbian (hsb)           |   0.81    |  0.89  |   0.85   |
+|            Hungarian (hun)             |   0.86    |  0.99  |   0.92   |
+|             Armenian (hye)             |   0.99    |  0.95  |   0.97   |
+|               Igbo (ibo)               |   0.94    |  0.80  |   0.86   |
+|               Ido (ido)                |   0.92    |  0.91  |   0.91   |
+|           Interlingue (ile)            |   0.98    |  0.85  |   0.91   |
+|              Iloko (ilo)               |   0.90    |  0.90  |   0.90   |
+|           Interlingua (ina)            |   0.93    |  0.95  |   0.94   |
+|            Indonesian (ind)            |   0.33    |  0.01  |   0.01   |
+|            Icelandic (isl)             |   0.97    |  0.95  |   0.96   |
+|             Italian (ita)              |   0.80    |  0.86  |   0.83   |
+|         Jamaican Patois (jam)          |   0.83    |  0.97  |   0.89   |
+|             Javanese (jav)             |   0.85    |  0.85  |   0.85   |
+|              Lojban (jbo)              |   1.00    |  0.96  |   0.98   |
+|             Japanese (jpn)             |   0.99    |  0.97  |   0.98   |
+|            Karakalpak (kaa)            |   0.99    |  0.90  |   0.94   |
+|              Kabyle (kab)              |   0.93    |  0.88  |   0.90   |
+|             Kannada (kan)              |   0.90    |  0.96  |   0.93   |
+|             Georgian (kat)             |   0.97    |  0.94  |   0.95   |
+|              Kazakh (kaz)              |   0.96    |  0.96  |   0.96   |
+|            Kabardian (kbd)             |   0.98    |  0.98  |   0.98   |
+|          Central Khmer (khm)           |   0.95    |  0.89  |   0.92   |
+|           Kinyarwanda (kin)            |   0.93    |  0.86  |   0.89   |
+|             Kirghiz (kir)              |   0.90    |  0.89  |   0.90   |
+|           Komi-Permyak (koi)           |   0.85    |  0.87  |   0.86   |
+|             Konkani (kok)              |   0.80    |  0.77  |   0.79   |
+|               Komi (kom)               |   0.91    |  0.79  |   0.85   |
+|              Korean (kor)              |   0.99    |  0.98  |   0.99   |
+|         Karachay-Balkar (krc)          |   0.91    |  0.91  |   0.91   |
+|            Ripuarisch (ksh)            |   0.67    |  0.88  |   0.76   |
+|             Kurdish (kur)              |   0.90    |  0.98  |   0.94   |
+|              Ladino (lad)              |   0.86    |  0.89  |   0.87   |
+|               Lao (lao)                |   0.98    |  0.88  |   0.93   |
+|              Latin (lat)               |   0.90    |  0.86  |   0.88   |
+|             Latvian (lav)              |   0.94    |  0.88  |   0.91   |
+|             Lezghian (lez)             |   0.96    |  0.87  |   0.91   |
+|             Ligurian (lij)             |   0.92    |  0.89  |   0.90   |
+|            Limburgan (lim)             |   0.76    |  0.88  |   0.81   |
+|             Lingala (lin)              |   0.89    |  0.91  |   0.90   |
+|            Lithuanian (lit)            |   0.95    |  0.94  |   0.94   |
+|             Lombard (lmo)              |   0.92    |  0.77  |   0.84   |
+|          Northern Luri (lrc)           |   0.94    |  0.75  |   0.84   |
+|            Latgalian (ltg)             |   0.88    |  0.93  |   0.90   |
+|          Luxembourgish (ltz)           |   0.84    |  0.81  |   0.82   |
+|             Luganda (lug)              |   0.92    |  0.90  |   0.91   |
+|         Literary Chinese (lzh)         |   0.91    |  0.94  |   0.93   |
+|             Maithili (mai)             |   0.84    |  0.92  |   0.88   |
+|            Malayalam (mal)             |   1.00    |  0.97  |   0.98   |
+|          Banyumasan (map-bms)          |   0.83    |  0.77  |   0.80   |
+|             Marathi (mar)              |   0.95    |  0.81  |   0.87   |
+|              Moksha (mdf)              |   0.85    |  0.95  |   0.90   |
+|           Eastern Mari (mhr)           |   0.90    |  0.85  |   0.88   |
+|           Minangkabau (min)            |   0.98    |  0.95  |   0.97   |
+|            Macedonian (mkd)            |   0.95    |  0.91  |   0.93   |
+|             Malagasy (mlg)             |   0.99    |  0.97  |   0.98   |
+|             Maltese (mlt)              |   0.91    |  0.98  |   0.94   |
+|            Mongolian (mon)             |   0.89    |  0.96  |   0.92   |
+|              Maori (mri)               |   0.99    |  0.97  |   0.98   |
+|           Western Mari (mrj)           |   0.99    |  0.97  |   0.98   |
+|              Malay (msa)               |   0.39    |  0.96  |   0.56   |
+|            Mirandese (mwl)             |   0.97    |  0.93  |   0.95   |
+|             Burmese (mya)              |   1.00    |  1.00  |   1.00   |
+|              Erzya (myv)               |   0.66    |  0.73  |   0.69   |
+|           Mazanderani (mzn)            |   0.86    |  0.91  |   0.89   |
+|         Min Nan Chinese (nan)          |   0.97    |  0.95  |   0.96   |
+|            Neapolitan (nap)            |   0.97    |  0.70  |   0.81   |
+|              Navajo (nav)              |   0.99    |  0.99  |   0.99   |
+|        Classical Nahuatl (nci)         |   0.98    |  0.54  |   0.70   |
+|            Low German (nds)            |   0.87    |  0.91  |   0.89   |
+|        West Low German (nds-nl)        |   0.68    |  0.80  |   0.73   |
+|      Nepali (macrolanguage) (nep)      |   0.68    |  0.51  |   0.58   |
+|              Newari (new)              |   0.93    |  0.79  |   0.86   |
+|              Dutch (nld)               |   0.86    |  0.80  |   0.83   |
+|        Norwegian Nynorsk (nno)         |   0.84    |  0.83  |   0.83   |
+|              Bokmål (nob)              |   0.71    |  0.83  |   0.76   |
+|              Narom (nrm)               |   0.95    |  0.70  |   0.80   |
+|          Northern Sotho (nso)          |   0.79    |  0.96  |   0.87   |
+|             Occitan (oci)              |   0.82    |  0.57  |   0.67   |
+|          Livvi-Karelian (olo)          |   0.85    |  0.91  |   0.88   |
+|              Oriya (ori)               |   0.99    |  0.95  |   0.97   |
+|              Oromo (orm)               |   0.96    |  0.86  |   0.90   |
+|             Ossetian (oss)             |   0.99    |  0.94  |   0.97   |
+|            Pangasinan (pag)            |   0.98    |  0.82  |   0.89   |
+|             Pampanga (pam)             |   0.96    |  0.63  |   0.76   |
+|             Panjabi (pan)              |   1.00    |  0.99  |   0.99   |
+|            Papiamento (pap)            |   0.91    |  0.94  |   0.92   |
+|              Picard (pcd)              |   0.72    |  0.58  |   0.64   |
+|       Pennsylvania German (pdc)        |   0.74    |  0.69  |   0.72   |
+|         Palatine German (pfl)          |   0.80    |  0.67  |   0.73   |
+|         Western Panjabi (pnb)          |   0.94    |  0.97  |   0.96   |
+|              Polish (pol)              |   0.92    |  0.92  |   0.92   |
+|            Portuguese (por)            |   0.75    |  0.84  |   0.79   |
+|              Pushto (pus)              |   0.99    |  0.94  |   0.96   |
+|             Quechua (que)              |   0.74    |  0.93  |   0.82   |
+|      Tarantino dialect (roa-tara)      |   0.92    |  0.90  |   0.91   |
+|             Romansh (roh)              |   0.90    |  0.93  |   0.91   |
+|             Romanian (ron)             |   0.97    |  0.89  |   0.93   |
+|              Rusyn (rue)               |   0.95    |  0.84  |   0.90   |
+|            Aromanian (rup)             |   0.95    |  0.82  |   0.88   |
+|             Russian (rus)              |   0.64    |  0.81  |   0.72   |
+|              Yakut (sah)               |   0.97    |  0.93  |   0.95   |
+|             Sanskrit (san)             |   0.98    |  0.90  |   0.94   |
+|             Sicilian (scn)             |   0.85    |  0.87  |   0.86   |
+|              Scots (sco)               |   0.95    |  0.88  |   0.91   |
+|            Samogitian (sgs)            |   0.98    |  0.96  |   0.97   |
+|             Sinhala (sin)              |   0.99    |  0.91  |   0.95   |
+|              Slovak (slk)              |   0.95    |  0.89  |   0.92   |
+|             Slovene (slv)              |   0.95    |  0.87  |   0.91   |
+|          Northern Sami (sme)           |   0.88    |  0.90  |   0.89   |
+|              Shona (sna)               |   0.88    |  0.82  |   0.85   |
+|              Sindhi (snd)              |   0.98    |  0.98  |   0.98   |
+|              Somali (som)              |   0.90    |  0.84  |   0.87   |
+|             Spanish (spa)              |   0.46    |  0.84  |   0.59   |
+|             Albanian (sqi)             |   0.95    |  0.93  |   0.94   |
+|            Sardinian (srd)             |   0.94    |  0.92  |   0.93   |
+|              Sranan (srn)              |   0.98    |  0.88  |   0.93   |
+|             Serbian (srp)              |   0.91    |  0.87  |   0.88   |
+|          Saterfriesisch (stq)          |   0.96    |  0.91  |   0.93   |
+|            Sundanese (sun)             |   0.93    |  0.86  |   0.89   |
+|     Swahili (macrolanguage) (swa)      |   0.93    |  0.85  |   0.88   |
+|             Swedish (swe)              |   0.94    |  0.92  |   0.93   |
+|             Silesian (szl)             |   0.92    |  0.97  |   0.95   |
+|              Tamil (tam)               |   0.99    |  0.98  |   0.98   |
+|              Tatar (tat)               |   0.95    |  0.91  |   0.93   |
+|               Tulu (tcy)               |   0.95    |  0.91  |   0.93   |
+|              Telugu (tel)              |   0.99    |  0.94  |   0.97   |
+|              Tetum (tet)               |   1.00    |  0.81  |   0.90   |
+|              Tajik (tgk)               |   0.96    |  0.94  |   0.95   |
+|             Tagalog (tgl)              |   0.93    |  0.93  |   0.93   |
+|               Thai (tha)               |   0.90    |  0.97  |   0.93   |
+|              Tongan (ton)              |   0.99    |  0.99  |   0.99   |
+|              Tswana (tsn)              |   0.99    |  0.69  |   0.82   |
+|             Turkmen (tuk)              |   0.98    |  0.94  |   0.96   |
+|             Turkish (tur)              |   0.84    |  0.86  |   0.85   |
+|              Tuvan (tyv)               |   0.89    |  0.90  |   0.90   |
+|              Udmurt (udm)              |   0.98    |  0.94  |   0.96   |
+|              Uighur (uig)              |   0.98    |  0.96  |   0.97   |
+|            Ukrainian (ukr)             |   0.81    |  0.94  |   0.87   |
+|               Urdu (urd)               |   0.98    |  0.97  |   0.98   |
+|              Uzbek (uzb)               |   0.97    |  0.92  |   0.94   |
+|             Venetian (vec)             |   0.88    |  0.86  |   0.87   |
+|               Veps (vep)               |   0.94    |  0.90  |   0.92   |
+|            Vietnamese (vie)            |   0.97    |  0.94  |   0.95   |
+|              Vlaams (vls)              |   0.92    |  0.65  |   0.76   |
+|             Volapük (vol)              |   0.98    |  0.99  |   0.98   |
+|               Võro (vro)               |   0.98    |  0.76  |   0.85   |
+|              Waray (war)               |   1.00    |  0.98  |   0.99   |
+|             Walloon (wln)              |   0.96    |  0.91  |   0.93   |
+|              Wolof (wol)               |   0.94    |  0.90  |   0.92   |
+|            Wu Chinese (wuu)            |   0.95    |  0.85  |   0.90   |
+|              Xhosa (xho)               |   0.91    |  0.85  |   0.88   |
+|            Mingrelian (xmf)            |   0.95    |  0.96  |   0.95   |
+|             Yiddish (yid)              |   0.99    |  0.96  |   0.98   |
+|              Yoruba (yor)              |   0.87    |  0.84  |   0.85   |
+|              Zeeuws (zea)              |   0.78    |  0.75  |   0.76   |
+|           Cantonese (zh-yue)           |   0.87    |  0.90  |   0.89   |
+|         Standard Chinese (zho)         |   0.92    |  0.92  |   0.92   |
+|                  MEAN                  |   0.89    |  0.87  |   0.87   |
 
 
 As can be seen, the model outperforms on groups of similar or dialects languages. For instance, the f1 score for the Persian language with other dialects Gilaki and Mazanderani is 86%, 86%, and 89%, respectively. Another example in other similar languages like Arabic and Egyptian Arabic 92% and 92% shows the model achieved tremendous results.
@@ -394,9 +400,9 @@ cd zabanshenas
 pip install -e .
 ```
 
-# Getting Started
+# How to Use
 
-You can use this code snippet to identify the most likely language of a written document. You just have to say: ZABANSHENAS (language detector) -> BESHNAS (detect) 😎. 
+You can use this code snippet to identify the most likely language of a written document. You just have to say: ZABANSHENAS (language detector) -> BESHNAS (do detect) 😎. 
 
 *Sounds interesting, doesn't it?*
 
@@ -445,3 +451,9 @@ beshnas(text, show_topk=True)
      'name': 'Central Kurdish',
      'prob': 0.00019319159036967903}}
 ```
+
+# For Future
+
+- [ ] Boosting the prediction runtime
+- [ ] Handling low-tokens for each language (using a data-augmentation scenario)
+- [ ] Installing as a pip package
