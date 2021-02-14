@@ -5,7 +5,7 @@ zabanshenas (زبان‌شناس / zæbænʒenæs) which has two meanings
 - A person who studies linguistics.
 - A way to identify the type of written language.
 
-<br/>
+<br/><br/>
 
 **Table of Contents**
 - [Introduction](#introduction)
