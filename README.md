@@ -9,7 +9,7 @@
 <br/>
 
 
-# Introduction 
+## Introduction 
 
 In this repository, I will use another perspective in creating a language detection model using [Transformers](https://arxiv.org/abs/1706.03762). Nowadays, Transformers have played a massive role in Natural Language Processing fields. In short, Transformers uses an attention mechanism to boost the speed and extract a high level of information (abstraction).
 
@@ -17,7 +17,7 @@ There are plenty of ways, solutions, and packages to find the language of a writ
 
 This model can detect a written language in three different stages: paragraph, sentence, and subset of text between three and four tokens.
 
-# WilI-2018 (Cleaned version)
+## WilI-2018 (Cleaned version)
 
 It is a benchmark for monolingual written natural language identification (high covering of a specific language). It contains 229,095 paragraphs that cover 235 languages. Language distribution includes 122 Indo-European languages, 22 Austronesian languages, 17 Turkic languages, 14 Uralic languages, 11 Niger-Congo languages, 10 Sino-Tibetan languages, 9 Afro-Asiatic languages, 6 constructed languages, and 24 languages of smaller families. It also consists of groups of similar languages and dialects:
 - Arabic, Egyptian Arabic
@@ -87,14 +87,14 @@ Instead of using a word or character level of tokenization, I used subword token
 
 </details>
 
-# Model (Architecture)
+## Model (Architecture)
 [RoBERTa](https://arxiv.org/abs/1907.11692) as a candidate model is used for this specific task with the following procedure. 
 Firstly, the model is trained on the WILI-2018 corpus and then fine-tuned as a SequenceClassification task to detect independent and similar languages and dialects. 
 The data is divided into three segments, 70% of the whole data (train + test) as paragraph choices, 15% tokenized into sentences, and what remains, split into the subset of three or five tokens per record to achieve better results.
 
 **In total, the dataset consists of a 1M training set, 11K validation set, and 11K testing set.**
 
-# Evaluation
+## Evaluation
 
 Precision, recall, F1 scores for each language and level are presented in the following tables.
 
@@ -845,7 +845,7 @@ We recommend Python 3.7 or higher, PyTorch 1.6.0 or higher. The code does not wo
 pip install git+https://github.com/m3hrdadfi/zabanshenas.git
 ```
 
-# How to Use
+## How to Use
 
 You can use this code snippet to identify the most likely language of a written document. You just have to say: ZABANSHENAS (language detector) -> BESHNAS (do detect) 😎. 
 
@@ -2068,3 +2068,18 @@ Output:
 ]
 ```
 
+## Citation
+
+Please cite in your publication as the following:
+
+
+```bibtex
+@misc{ZabanShenas,
+  author = {Mehrdad Farahani},
+  title = {Zabanshenas is a solution for identifying the most likely language of a piece of written text.},
+  year = {2020},
+  publisher = {GitHub},
+  journal = {GitHub repository},
+  howpublished = {\url{https://github.com/m3hrdadfi/zabanshenas}},
+}
+```
