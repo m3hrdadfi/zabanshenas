@@ -886,6 +886,12 @@ r = zabanshenas.detect(text, return_all_scores=True)
 print(r)
 ```
 Output:
+
+</details>
+
+<details>
+<summary>See all the 235 candidates</summary>
+
 ```text
 [
   [
@@ -2067,6 +2073,7 @@ Output:
   ]
 ]
 ```
+</details>
 
 ## Citation
 
