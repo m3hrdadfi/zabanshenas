@@ -1,6 +1,6 @@
 <h1 align="center">Zabanshenas 🦁</h1>
 
-**Zabanshenas** is a Transformer-based solution for identifying the most likely language of a written document/text. 
+A Transformer-based solution for identifying the most likely language of a written document/text. 
 **Zabanshenas** is a Persian word that has two meanings:
 
 - A person who studies linguistics.
@@ -836,7 +836,8 @@ Precision, recall, F1 scores for each language and level are presented in the fo
 
 </details>
 
-As can be seen, the model outperforms on groups of similar or dialects languages. For instance, the f1 scores for the Persian language and similar languages like Gilaki, Northern Luri,  Central Kurdish, Kurdish, and Mazanderani are 92%, 91%, 92%, 99%, 94%, and 93%, respectively. 
+As can be seen, the model outperforms on groups of similar or dialects languages. 
+For instance, the f1 scores for the Persian language and similar languages like Gilaki, Northern Luri,  Central Kurdish, Kurdish, and Mazanderani are 92%, 91%, 92%, 99%, 94%, and 93%, respectively. 
 
 # How to Install
 We recommend Python 3.7 or higher, PyTorch 1.6.0 or higher. The code does not work with Python 2.7.
@@ -873,7 +874,7 @@ Output:
 ]
 ```
 
-Or you can find out the all the candidates' scores of detected languages using the following snippet.
+Or you can find out all the candidates' scores using the following snippet.
 
 ```python
 from zabanshenas.zabanshenas import Zabanshenas
@@ -2073,12 +2074,10 @@ Output:
   ]
 ]
 ```
+
 </details>
 
 ## Citation
-
-Please cite in your publication as the following:
-
 
 ```bibtex
 @misc{ZabanShenas,
