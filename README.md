@@ -346,6 +346,7 @@ Precision, recall, F1 scores for each language and level are presented in the fo
 
 <details>
 <summary>Sentence level</summary>
+
 |                language                | precision |  recall  | f1-score |
 |:--------------------------------------:|:---------:|:--------:|:--------:|
 |             Achinese (ace)             |  0.754545 | 0.873684 | 0.809756 |
