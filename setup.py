@@ -1,5 +1,4 @@
 import os
-import glob
 from setuptools import find_packages, setup
 
 
@@ -8,8 +7,8 @@ def get_file_path(name):
 
 
 def parse_requirements(filename):
-    lineiter = (line.strip() for line in open(filename))
-    return [line for line in lineiter if line and not line.startswith("#")]
+    line_iter = (line.strip() for line in open(filename))
+    return [line for line in line_iter if line and not line.startswith("#")]
 
 
 with open(get_file_path('zabanshenas/version.py')) as f:
@@ -27,7 +26,7 @@ if __name__ == "__main__":
     setup(
         name="zabanshenas",
         version=__version__,
-        description="zabanshenas - language detection",
+        description="zabanshenas - language detector",
         long_description=long_description,
         long_description_content_type="text/markdown",
         author="Mehrdad Farahani",
@@ -35,10 +34,6 @@ if __name__ == "__main__":
         url="https://github.com/m3hrdadfi/zabanshenas",
         license="Apache License",
         packages=find_packages(),
-        package_data={
-            "": glob.glob(get_file_path("zabanshenas/models/**/*"), recursive=True)
-        },
-        include_package_data=True,
         install_requires=requirements,
         platforms=["linux", "unix"],
         python_requires=">3.7.0",

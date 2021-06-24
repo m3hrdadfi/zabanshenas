@@ -1,6 +1,3 @@
-numpy
-pandas
-clean-text[gpl]
-sklearn
 torch
-tokenizers
+git+https://github.com/huggingface/transformers.git
+regex
