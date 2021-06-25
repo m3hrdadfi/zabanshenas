@@ -2084,7 +2084,7 @@ Output:
 Please cite this repository in publications as the following:
 
 ```bibtex
-@misc{PersianSentenceTransformers,
+@misc{ZabanShenas,
   author       = {Mehrdad Farahani},
   title        = {Zabanshenas is a solution for identifying the most likely language of a piece of written text},
   month        = feb,
