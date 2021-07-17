@@ -850,7 +850,7 @@ pip install git+https://github.com/m3hrdadfi/zabanshenas.git
 
 ## How to Use
 
-You can use this code snippet to identify the most likely language of a written document. You just have to say: ZABANSHENAS (language detector) -> BESHNAS (do detect) 😎. 
+You can use this code snippet to identify the most likely language of a written document. You just have to say: ZABANSHENAS (detector) -> BESHNAS (detect) 😎. 
 
 *Sounds interesting, doesn't it?*
 
