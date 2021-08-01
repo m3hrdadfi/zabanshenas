@@ -1,4 +1,6 @@
 <h1 align="center">Zabanshenas 🕵</h1>
+<p align="center"><a href="https://doi.org/10.5281/zenodo.5029022"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.5029022.svg" alt="DOI"></a></p>
+<br/><br/>
 
 A Transformer-based solution for identifying the most likely language of a written document/text. 
 **Zabanshenas** is a Persian word that has two meanings:
@@ -848,7 +850,7 @@ pip install git+https://github.com/m3hrdadfi/zabanshenas.git
 
 ## How to Use
 
-You can use this code snippet to identify the most likely language of a written document. You just have to say: ZABANSHENAS (language detector) -> BESHNAS (do detect) 😎. 
+You can use this code snippet to identify the most likely language of a written document. You just have to say: ZABANSHENAS (detector) -> BESHNAS (detect) 😎. 
 
 *Sounds interesting, doesn't it?*
 
@@ -2079,13 +2081,21 @@ Output:
 
 ## Citation
 
+Please cite this repository in publications as the following:
+
 ```bibtex
 @misc{ZabanShenas,
-  author = {Mehrdad Farahani},
-  title = {Zabanshenas is a solution for identifying the most likely language of a piece of written text.},
-  year = {2020},
-  publisher = {GitHub},
-  journal = {GitHub repository},
-  howpublished = {\url{https://github.com/m3hrdadfi/zabanshenas}},
+  author       = {Mehrdad Farahani},
+  title        = {Zabanshenas is a solution for identifying the most likely language of a piece of written text},
+  month        = feb,
+  year         = 2021,
+  publisher    = {Zenodo},
+  version      = {v2.0.1},
+  doi          = {10.5281/zenodo.5029022},
+  url          = {https://doi.org/10.5281/zenodo.5029022}
 }
 ```
+
+
+## License
+[Apache License 2.0](LICENSE)
