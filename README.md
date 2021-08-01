@@ -1,4 +1,4 @@
-<h1 align="center">Zabanshenas 🦁</h1>
+<h1 align="center">Zabanshenas 🕵</h1>
 <p align="center"><a href="https://doi.org/10.5281/zenodo.5029022"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.5029022.svg" alt="DOI"></a></p>
 <br/><br/>
 
