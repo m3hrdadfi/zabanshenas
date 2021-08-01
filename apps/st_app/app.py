@@ -22,7 +22,7 @@ class Zabanshenas:
             model_name_or_path: str = "m3hrdadfi/zabanshenas-roberta-base-mix",
             by_gpu: bool = False
     ) -> None:
-        self.debug = True
+        self.debug = False
         self.dummy_outputs = dummy_outputs
         self.device = torch.device("cpu" if not by_gpu else "cuda")
         self.model_name_or_path = model_name_or_path
