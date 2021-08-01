@@ -17,7 +17,7 @@ def plot_result(top_languages):
         range_x=(0, 115),
         title=f'Top Detections {top_k}',
         color=np.linspace(0, 1, len(scores)),
-        color_continuous_scale='GnBu'
+        color_continuous_scale='Plotly3'
     )
     fig.update(layout_coloraxis_showscale=False)
     fig.update_traces(texttemplate='%{text:0.1f}%', textposition='outside')
