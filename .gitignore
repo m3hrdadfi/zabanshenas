@@ -134,4 +134,6 @@ dmypy.json
 .vscode/
 .history
 tmp
+*.tmp.py
+*.tmp.*
 .idea
