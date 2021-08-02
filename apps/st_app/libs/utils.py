@@ -15,7 +15,7 @@ def plot_result(top_languages):
         labels={'x': 'Confidence', 'y': 'Language'},
         text=scores,
         range_x=(0, 115),
-        title=f'Top Detections {top_k}',
+        title=f'Top {top_k} Detections',
         color=np.linspace(0, 1, len(scores)),
         color_continuous_scale='Viridis'
     )
